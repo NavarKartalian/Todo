@@ -70,6 +70,9 @@ export function TodoProvider({ children }: TodoProviderProps) {
   
       if(task.length === 0) {
         setTask([newTask]);
+        toast.success('Todo added!', {
+          theme: colorMode,
+        });
         return setNewTaskTitle('');
       }
 
@@ -112,7 +115,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
     const filteredTasks = task.filter(tasks => tasks.isComplete !== true);
 
     setTask(filteredTasks);
-    toast.success('All completed Todos deleted!', {
+    toast.success('Todo list cleared', {
       theme: colorMode,
     });
     setFilter('All');
