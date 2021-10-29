@@ -1,4 +1,4 @@
-import { Flex, Heading, IconButton, Icon, Text, useColorMode, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Box, Heading, IconButton, Icon, Text, useColorMode, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import darkBg from '../../assets/bg-desktop-dark.jpg';
 import lightBg from '../../assets/bg-desktop-light.jpg';
@@ -10,7 +10,7 @@ import { FilterTodo } from "../FilterTodo";
 
 export function TodoComponent() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const color = useColorModeValue('white', 'hsl(233, 14%, 35%)');
+  const color = useColorModeValue('hsl(236, 9%, 61%)', 'hsl(233, 14%, 35%)');
 
   const isMobile = useBreakpointValue({
     base: true,
@@ -32,8 +32,8 @@ export function TodoComponent() {
       />
 
       <Flex direction='column' maxW='585px' mx='auto' position='relative' top='50' p='6'>
-        <Flex justify='space-between' marginBottom='8'>
-          <Heading fontSize='42px'>T O D O</Heading>
+        <Flex justify='space-between' marginBottom='8' as='header'>
+          <Heading fontSize='42px' as='h1'>T O D O</Heading>
           <IconButton 
             aria-label={colorMode === 'dark' ? 'toggle light mode' : 'toggle dark mode'} 
             colorScheme='transparent' 
@@ -43,14 +43,15 @@ export function TodoComponent() {
           />
         </Flex>
 
-        <TodoInput />
-        <TodoList />
-        
-        <FilterTodo />
+        <Box as='main'>
+          <TodoInput />
+          <TodoList />
+          <FilterTodo />
+        </Box>
       </Flex>
 
       <Flex as='footer' mx='auto' maxW='585px' mt='20' mb='12' justify='center'>
-        <Text color={color}>Drag and drop to reorder list</Text>
+        <Text color={color} fontWeight='bold'>Drag and drop to reorder list</Text>
       </Flex>
     </>
   );

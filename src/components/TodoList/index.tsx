@@ -29,8 +29,7 @@ export function TodoList() {
 
       setTask(items as []);
   }
-
-  console.log(task);
+  
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId={'droppable'}>
