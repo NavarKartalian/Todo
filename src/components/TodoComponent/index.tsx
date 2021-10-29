@@ -1,4 +1,4 @@
-import { Flex, Heading, IconButton, Icon, useColorMode, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, Heading, IconButton, Icon, Text, useColorMode, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import darkBg from '../../assets/bg-desktop-dark.jpg';
 import lightBg from '../../assets/bg-desktop-light.jpg';
@@ -6,9 +6,11 @@ import lightMobileBg from '../../assets/bg-mobile-light.jpg';
 import darkMobileBg from '../../assets/bg-mobile-dark.jpg';
 import { TodoInput } from "../TodoInput";
 import { TodoList } from "../TodoList";
+import { FilterTodo } from "../FilterTodo";
 
 export function TodoComponent() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const color = useColorModeValue('white', 'hsl(233, 14%, 35%)');
 
   const isMobile = useBreakpointValue({
     base: true,
@@ -43,6 +45,12 @@ export function TodoComponent() {
 
         <TodoInput />
         <TodoList />
+        
+        <FilterTodo />
+      </Flex>
+
+      <Flex as='footer' mx='auto' maxW='585px' mt='20' mb='12' justify='center'>
+        <Text color={color}>Drag and drop to reorder list</Text>
       </Flex>
     </>
   );

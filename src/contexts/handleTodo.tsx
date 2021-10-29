@@ -1,4 +1,6 @@
 import { createContext, KeyboardEvent, ReactNode, useContext, useEffect, useState } from "react";
+import { useColorMode } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 
 interface TodoProviderProps {
   children: ReactNode;
@@ -30,6 +32,8 @@ export function TodoProvider({ children }: TodoProviderProps) {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [filter, setFilter] = useState('All');
 
+  const { colorMode } = useColorMode();
+
   useEffect(() => {
     const initialTasks = [
       {id: 1, title: 'Complete online JavaScript course', isComplete: true},
@@ -52,6 +56,9 @@ export function TodoProvider({ children }: TodoProviderProps) {
   function handleCreateNewTask(e: KeyboardEvent) {
     if(e.key === 'Enter') {
       if(!newTaskTitle.trim()) {
+        toast.error('Your Todo must have a title', {
+          theme: colorMode,
+        });
         return setNewTaskTitle('');
       }
   
@@ -65,10 +72,20 @@ export function TodoProvider({ children }: TodoProviderProps) {
         setTask([newTask]);
         return setNewTaskTitle('');
       }
+
+      if(task.length >= 20) {
+        toast.error('There is a limit of 20 Todos', {
+          theme: colorMode,
+        });
+        return;
+      }
   
       setTask(oldState => [...oldState, newTask]);
-  
-      setFilter('All')
+      
+      toast.success('Todo added!', {
+        theme: colorMode,
+      });
+      setFilter('All');
       setNewTaskTitle('');
     }
   }
@@ -86,12 +103,18 @@ export function TodoProvider({ children }: TodoProviderProps) {
     const filteredTasks = task.filter(tasks => tasks.id !== id);
     
     setTask(filteredTasks);
+    toast.success('Todo deleted!', {
+      theme: colorMode,
+    });
   }
 
   function handleDeleteCompleteTask() {
     const filteredTasks = task.filter(tasks => tasks.isComplete !== true);
 
     setTask(filteredTasks);
+    toast.success('All completed Todos deleted!', {
+      theme: colorMode,
+    });
     setFilter('All');
   }
 
@@ -100,15 +123,15 @@ export function TodoProvider({ children }: TodoProviderProps) {
       value={
         {
           task,
-          filter,
           setTask,
+          handleDeleteCompleteTask,
+          filter,
+          handleCompleteTask,
           setFilter,
+          handleDeleteTask,
+          handleCreateNewTask,
           newTaskTitle,
           setNewTaskTitle,
-          handleDeleteTask,
-          handleCompleteTask, 
-          handleCreateNewTask, 
-          handleDeleteCompleteTask
         }
       }
     >
