@@ -26,7 +26,7 @@ export function TodoInput() {
           placeholder='Create a new todo...' 
           py='8'
           pl='16' 
-          fontSize={['sm', '20', '20', '20']}
+          fontSize={['16', '20', '20', '20']}
           maxLength={40}
           _hover={{
             background: ""
